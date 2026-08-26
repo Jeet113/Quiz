@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CUET Career Club — Quiz Challenge | Club Fest 2026</title>
-  <meta name="description" content="The Ultimate Quiz Challenge at CUET Career Club Club Fest. 5 Segments. 15 Questions. Think Fast. Answer Smart.">
+  <meta name="description"
+    content="The Ultimate Quiz Challenge at CUET Career Club Club Fest. 5 Segments. 15 Questions. Think Fast. Answer Smart.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- ========== Background Effects ========== -->
@@ -41,7 +46,7 @@
         <div class="welcome-badge">🏆 CLUB FEST 2026</div>
         <h1 class="welcome-title">THE ULTIMATE<br><span class="text-gradient">QUIZ CHALLENGE</span></h1>
         <p class="welcome-subtitle">Think Fast. Answer Smart. Conquer All 5 Progressive Steps.</p>
-        
+
         <!-- 5-Step Difficulty Roadmap -->
         <div class="steps-roadmap">
           <div class="roadmap-header">⚡ 5-STEP DIFFICULTY CHALLENGE</div>
@@ -96,7 +101,8 @@
           <button class="btn btn-primary btn-glow btn-large" id="btn-begin" onclick="showScreen('screen-name')">
             BEGIN CHALLENGE
           </button>
-          <button class="btn btn-secondary" id="btn-view-ranking" onclick="showRankingScreen()" style="margin-top: 12px;">
+          <button class="btn btn-secondary" id="btn-view-ranking" onclick="showRankingScreen()"
+            style="margin-top: 12px;">
             📊 VIEW RANKING
           </button>
         </div>
@@ -110,15 +116,8 @@
           <div class="card-icon">👤</div>
           <h2 class="card-title">Enter Participant Name</h2>
           <p class="card-desc">Please enter your full name to begin.</p>
-          <input
-            type="text"
-            id="participant-name"
-            class="input-field"
-            placeholder="Your Name"
-            maxlength="40"
-            autocomplete="off"
-            spellcheck="false"
-          >
+          <input type="text" id="participant-name" class="input-field" placeholder="Your Name" maxlength="40"
+            autocomplete="off" spellcheck="false">
           <p id="name-error" class="input-error"></p>
           <button class="btn btn-primary" id="btn-submit-name" onclick="submitName()">CONTINUE</button>
         </div>
@@ -201,7 +200,8 @@
               </svg>
               <span class="timer-text" id="timer-text">30</span>
             </div>
-            <button class="btn-timer-toggle" id="btn-timer-toggle" onclick="toggleTimerPause()" title="Pause or Resume the quiz timer">
+            <button class="btn-timer-toggle" id="btn-timer-toggle" onclick="toggleTimerPause()"
+              title="Pause or Resume the quiz timer">
               <span class="toggle-icon" id="timer-toggle-icon">⏸</span>
               <span class="toggle-text" id="timer-toggle-text">Pause</span>
             </button>
@@ -232,15 +232,18 @@
           <div class="lifelines-section">
             <span class="lifelines-label">Lifelines (<span id="lifelines-count">3</span>/3):</span>
             <div class="lifeline-buttons">
-              <button class="lifeline-btn" id="lifeline-5050" onclick="useLifeline('5050')" title="50:50 — Remove 2 wrong options">
+              <button class="lifeline-btn" id="lifeline-5050" onclick="useLifeline('5050')"
+                title="50:50 — Remove 2 wrong options">
                 <span class="lifeline-icon">✂️</span>
                 <span class="lifeline-name">50:50</span>
               </button>
-              <button class="lifeline-btn" id="lifeline-phone" onclick="useLifeline('phone')" title="Phone a Friend — Call a friend for help (Timer Pauses)">
+              <button class="lifeline-btn" id="lifeline-phone" onclick="useLifeline('phone')"
+                title="Phone a Friend — Call a friend for help (Timer Pauses)">
                 <span class="lifeline-icon">📞</span>
                 <span class="lifeline-name">Phone a Friend</span>
               </button>
-              <button class="lifeline-btn" id="lifeline-switch" onclick="useLifeline('switch')" title="Switch Question — Replace with a new question">
+              <button class="lifeline-btn" id="lifeline-switch" onclick="useLifeline('switch')"
+                title="Switch Question — Replace with a new question">
                 <span class="lifeline-icon">🔄</span>
                 <span class="lifeline-name">Switch Question</span>
               </button>
@@ -265,7 +268,8 @@
         <div class="transition-progress" id="transition-progress">
           <!-- 5-segment progress dots generated by JS -->
         </div>
-        <button class="btn btn-primary btn-glow" id="transition-btn" onclick="continueAfterTransition()">CONTINUE</button>
+        <button class="btn btn-primary btn-glow" id="transition-btn"
+          onclick="continueAfterTransition()">CONTINUE</button>
       </div>
     </section>
 
@@ -329,7 +333,8 @@
           <span class="winner-name" id="winner-name"></span>
         </div>
         <button class="btn btn-primary btn-large btn-glow" onclick="nextParticipant()">NEXT PARTICIPANT</button>
-        <button class="btn btn-ghost" style="color: var(--text-muted);" onclick="showRankingScreen()">📊 View Ranking</button>
+        <button class="btn btn-ghost" style="color: var(--text-muted);" onclick="showRankingScreen()">📊 View
+          Ranking</button>
       </div>
     </section>
 
@@ -360,13 +365,13 @@
           <div class="phone-pulse-ring-2"></div>
           <span class="phone-icon-large">📱</span>
         </div>
-        
+
         <h3 class="phone-modal-title">Phone a Friend</h3>
         <p class="phone-modal-subtitle">
           Call your friend on your mobile phone now!<br>
           <span class="phone-modal-sub-bn">আপনার মোবাইল থেকে বন্ধুকে কল করুন (কুইজ টাইমার পজ আছে)</span>
         </p>
-        
+
         <!-- Big Call Timer -->
         <div class="phone-timer-container">
           <div class="phone-timer-circle">
@@ -400,4 +405,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
