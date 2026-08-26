@@ -4,26 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CUET Career Club — Quiz Challenge | Club Fest 2026</title>
+  <title>SHERLOCKED — CUET Career Club On-Spot Quiz Competition | Club Fest 2026</title>
   <meta name="description"
-    content="The Ultimate Quiz Challenge at CUET Career Club Club Fest. 5 Segments. 15 Questions. Think Fast. Answer Smart.">
+    content="SHERLOCKED — The Ultimate On-Spot Quiz Competition at CUET Career Club Club Fest. 5 Steps. 15 Questions. Think Fast. Deduce Smart.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ========== Background Effects ========== -->
+  <!-- ========== Background Atmosphere (Blueprint & Ambient Glows) ========== -->
   <div class="bg-effects" aria-hidden="true">
     <div class="bg-circle bg-circle-1"></div>
     <div class="bg-circle bg-circle-2"></div>
     <div class="bg-circle bg-circle-3"></div>
     <div class="bg-circle bg-circle-4"></div>
     <div class="bg-grid"></div>
+    <div class="bg-detective-lines"></div>
   </div>
 
   <!-- ========== App Container ========== -->
@@ -32,10 +33,24 @@
     <!-- ===== Header ===== -->
     <header class="app-header" id="app-header">
       <div class="header-inner">
-        <div class="logo">
-          <span class="logo-main">CUET CAREER CLUB</span>
-          <span class="logo-divider"></span>
-          <span class="logo-sub">CLUB FEST</span>
+        <!-- Left: Club Logo & Organizer Branding -->
+        <div class="header-club">
+          <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="club-logo-img">
+          <div class="club-title-group">
+            <span class="club-title-main">CUET CAREER CLUB</span>
+            <span class="club-title-sub">CLUB FEST 2026</span>
+          </div>
+        </div>
+
+        <!-- Center: Primary Competition Title -->
+        <div class="header-brand">
+          <span class="brand-badge">🕵️</span>
+          <span class="brand-title">SHERLOCKED</span>
+        </div>
+
+        <!-- Right: Event Tag -->
+        <div class="header-right">
+          <div class="header-tag">ON-SPOT QUIZ</div>
         </div>
       </div>
     </header>
@@ -43,13 +58,16 @@
     <!-- ===== Screen: Welcome ===== -->
     <section id="screen-welcome" class="screen active">
       <div class="screen-content welcome-content">
-        <div class="welcome-badge">🏆 CLUB FEST 2026</div>
-        <h1 class="welcome-title">THE ULTIMATE<br><span class="text-gradient">QUIZ CHALLENGE</span></h1>
-        <p class="welcome-subtitle">Think Fast. Answer Smart. Conquer All 5 Progressive Steps.</p>
+        <div class="welcome-badge">
+          <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="welcome-badge-logo">
+          <span>CUET CAREER CLUB PRESENTS • CLUB FEST 2026</span>
+        </div>
+        <h1 class="welcome-title">SHERLOCKED<br><span class="text-gradient">ON-SPOT QUIZ COMPETITION</span></h1>
+        <p class="welcome-subtitle">Think Fast. Deduce Smart. Solve All 5 Investigation Steps.</p>
 
-        <!-- 5-Step Difficulty Roadmap -->
+        <!-- 5-Step Case Difficulty Roadmap -->
         <div class="steps-roadmap">
-          <div class="roadmap-header">⚡ 5-STEP DIFFICULTY CHALLENGE</div>
+          <div class="roadmap-header">⚡ 5-STEP CASE DIFFICULTY ARCHITECTURE</div>
           <div class="roadmap-steps">
             <div class="roadmap-step step-easy">
               <div class="roadmap-badge">STEP 1</div>
@@ -81,29 +99,29 @@
 
         <div class="welcome-rules">
           <div class="rule-item">
-            <span class="rule-icon">📋</span>
-            <span><strong>5 Steps</strong> × 3 Questions = 15 Total</span>
+            <span class="rule-icon">🔍</span>
+            <span><strong>5 Investigation Steps</strong> × 3 Questions = 15 Total</span>
           </div>
           <div class="rule-item">
-            <span class="rule-icon">🎯</span>
-            <span>Choose a <strong>Topic</strong> for each Step</span>
+            <span class="rule-icon">📁</span>
+            <span>Choose Your <strong>Case/Topic</strong> for each Step</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon">⏱️</span>
-            <span><strong>30 Seconds</strong> per Question</span>
+            <span><strong>30 Seconds</strong> per Deduction</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon">❌</span>
-            <span>Wrong Answer = <strong>Turn Over</strong></span>
+            <span>Wrong Answer = <strong>Case Closed (Turn Over)</strong></span>
           </div>
         </div>
         <div class="welcome-actions">
           <button class="btn btn-primary btn-glow btn-large" id="btn-begin" onclick="showScreen('screen-name')">
-            BEGIN CHALLENGE
+            🔍 BEGIN INVESTIGATION
           </button>
           <button class="btn btn-secondary" id="btn-view-ranking" onclick="showRankingScreen()"
             style="margin-top: 12px;">
-            📊 VIEW RANKING
+            📊 VIEW DETECTIVE RANKING
           </button>
         </div>
       </div>
@@ -113,13 +131,16 @@
     <section id="screen-name" class="screen">
       <div class="screen-content">
         <div class="card card-center">
-          <div class="card-icon">👤</div>
-          <h2 class="card-title">Enter Participant Name</h2>
-          <p class="card-desc">Please enter your full name to begin.</p>
-          <input type="text" id="participant-name" class="input-field" placeholder="Your Name" maxlength="40"
+          <div class="card-logo-badge">
+            <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="card-club-logo">
+          </div>
+          <h2 class="card-title">Detective Identification</h2>
+          <p class="card-desc">Please enter your full name to begin the investigation.</p>
+          <input type="text" id="participant-name" class="input-field" placeholder="Enter Your Name" maxlength="40"
             autocomplete="off" spellcheck="false">
           <p id="name-error" class="input-error"></p>
-          <button class="btn btn-primary" id="btn-submit-name" onclick="submitName()">CONTINUE</button>
+          <button class="btn btn-primary btn-glow" id="btn-submit-name" onclick="submitName()">PROCEED TO CASE
+            ROOM</button>
         </div>
       </div>
     </section>
@@ -129,9 +150,9 @@
       <div class="screen-content segment-content">
         <p class="screen-greeting" id="topic-greeting"></p>
         <div class="segment-indicator" id="segment-indicator">
-          <!-- Segment number badge -->
+          <!-- Step number badge -->
         </div>
-        <h2 class="screen-title" id="topic-screen-title">Select Your Topic</h2>
+        <h2 class="screen-title" id="topic-screen-title">Choose Your Case</h2>
         <div class="segment-grid" id="topic-grid">
           <!-- Dynamically generated by JS -->
         </div>
@@ -142,11 +163,11 @@
     <section id="screen-confirm" class="screen">
       <div class="screen-content">
         <div class="card card-center confirm-card">
-          <div class="card-icon">⚡</div>
-          <h2 class="card-title">Step Ready</h2>
+          <div class="card-icon">📁</div>
+          <h2 class="card-title">Case Briefing Ready</h2>
           <div class="confirm-details">
             <div class="confirm-item">
-              <span class="confirm-label">Participant</span>
+              <span class="confirm-label">Detective</span>
               <span class="confirm-value" id="confirm-name"></span>
             </div>
             <div class="confirm-item">
@@ -154,7 +175,7 @@
               <span class="confirm-value" id="confirm-segment"></span>
             </div>
             <div class="confirm-item">
-              <span class="confirm-label">Topic</span>
+              <span class="confirm-label">Case Field</span>
               <span class="confirm-value" id="confirm-topic"></span>
             </div>
             <div class="confirm-item">
@@ -167,9 +188,9 @@
             </div>
           </div>
           <button class="btn btn-primary btn-glow btn-large" onclick="startSegment()">
-            START STEP
+            START CASE
           </button>
-          <button class="btn btn-ghost" onclick="showScreen('screen-topic')">← Change Topic</button>
+          <button class="btn btn-ghost" onclick="showScreen('screen-topic')">← Change Case</button>
         </div>
       </div>
     </section>
@@ -263,13 +284,13 @@
     <section id="screen-transition" class="screen">
       <div class="screen-content transition-content">
         <div class="transition-icon" id="transition-icon">✅</div>
-        <h2 class="transition-title" id="transition-title">SEGMENT 1 COMPLETE!</h2>
-        <p class="transition-subtitle" id="transition-subtitle">Get ready for the next segment.</p>
+        <h2 class="transition-title" id="transition-title">STEP 1 COMPLETE!</h2>
+        <p class="transition-subtitle" id="transition-subtitle">Get ready for the next case.</p>
         <div class="transition-progress" id="transition-progress">
           <!-- 5-segment progress dots generated by JS -->
         </div>
-        <button class="btn btn-primary btn-glow" id="transition-btn"
-          onclick="continueAfterTransition()">CONTINUE</button>
+        <button class="btn btn-primary btn-glow btn-large" id="transition-btn"
+          onclick="continueAfterTransition()">CONTINUE TO NEXT CASE</button>
       </div>
     </section>
 
@@ -278,11 +299,11 @@
       <div class="screen-content">
         <div class="card card-center out-card">
           <div class="out-icon">✕</div>
-          <h2 class="out-title" id="out-title">TURN OVER</h2>
-          <p class="out-message" id="out-message">Better luck next time!</p>
+          <h2 class="out-title" id="out-title">CASE CLOSED</h2>
+          <p class="out-message" id="out-message">Better luck next time, Detective!</p>
           <div class="out-details">
             <div class="confirm-item">
-              <span class="confirm-label">Participant</span>
+              <span class="confirm-label">Detective</span>
               <span class="confirm-value" id="out-name"></span>
             </div>
             <div class="confirm-item">
@@ -298,8 +319,9 @@
               <span class="confirm-value" id="out-score"></span>
             </div>
           </div>
-          <button class="btn btn-secondary btn-large" onclick="nextParticipant()">NEXT PARTICIPANT</button>
-          <button class="btn btn-ghost" onclick="showRankingScreen()">📊 View Ranking</button>
+          <button class="btn btn-primary btn-large btn-glow" onclick="nextParticipant()">NEXT PARTICIPANT</button>
+          <button class="btn btn-secondary" onclick="showRankingScreen()" style="margin-top: 10px;">📊 View Detective
+            Ranking</button>
         </div>
       </div>
     </section>
@@ -311,10 +333,14 @@
           <span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span>
         </div>
+        <div class="winner-organizer-badge">
+          <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="winner-club-logo">
+          <span>CUET CAREER CLUB • CLUB FEST 2026</span>
+        </div>
         <div class="winner-trophy">🏆</div>
-        <h2 class="winner-title">CHALLENGE COMPLETE!</h2>
-        <h3 class="winner-subtitle">🎉 CONGRATULATIONS 🎉</h3>
-        <div class="winner-qualified">ALL 15 QUESTIONS ANSWERED</div>
+        <h2 class="winner-title">INVESTIGATION COMPLETE!</h2>
+        <h3 class="winner-subtitle">🎉 CONGRATULATIONS, MASTER DETECTIVE 🎉</h3>
+        <div class="winner-qualified">ALL 15 CASES SOLVED</div>
         <div class="winner-stats">
           <div class="winner-stat-item">
             <span class="winner-stat-value" id="winner-score">0</span>
@@ -333,7 +359,7 @@
           <span class="winner-name" id="winner-name"></span>
         </div>
         <button class="btn btn-primary btn-large btn-glow" onclick="nextParticipant()">NEXT PARTICIPANT</button>
-        <button class="btn btn-ghost" style="color: var(--text-muted);" onclick="showRankingScreen()">📊 View
+        <button class="btn btn-ghost" style="color: var(--text-muted);" onclick="showRankingScreen()">📊 View Detective
           Ranking</button>
       </div>
     </section>
@@ -342,17 +368,23 @@
     <section id="screen-ranking" class="screen">
       <div class="screen-content ranking-content">
         <div class="ranking-header-section">
-          <div class="ranking-trophy">🏆</div>
-          <h2 class="screen-title">Final Ranking</h2>
-          <p class="ranking-subtitle" id="ranking-subtitle">All participants ranked by performance</p>
+          <div class="ranking-organizer-badge">
+            <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="ranking-club-logo">
+            <span class="ranking-organizer-text">CUET CAREER CLUB • CLUB FEST 2026</span>
+          </div>
+          <h2 class="screen-title">FINAL DETECTIVE RANKING</h2>
+          <p class="ranking-subtitle" id="ranking-subtitle">Official Leaderboard — SHERLOCKED On-Spot Quiz Competition
+          </p>
         </div>
+        <!-- Top 3 Podium Container -->
+        <div class="podium-container" id="ranking-podium-wrapper"></div>
+        <!-- Full Leaderboard Table -->
         <div class="ranking-table-wrapper" id="ranking-table-wrapper">
-          <!-- Dynamically generated ranking table -->
-          <p class="ranking-empty" id="ranking-empty">No participants have completed the challenge yet.</p>
+          <p class="ranking-empty" id="ranking-empty">No detectives have completed the challenge yet.</p>
         </div>
         <div class="ranking-actions">
-          <button class="btn btn-primary" onclick="showScreen('screen-welcome')">← BACK TO HOME</button>
-          <button class="btn btn-secondary" onclick="nextParticipant()">+ NEW PARTICIPANT</button>
+          <button class="btn btn-primary btn-glow" onclick="showScreen('screen-welcome')">← BACK TO HOME</button>
+          <button class="btn btn-secondary" onclick="nextParticipant()">+ NEW DETECTIVE</button>
         </div>
       </div>
     </section>
