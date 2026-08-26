@@ -931,6 +931,7 @@ function startSegment() {
 
 function loadQuestion() {
   gameState.isAnswered = false;
+  hideAnswerAction();
   gameState.currentQuestionInSegment++;
   gameState.overallQuestionNumber = (gameState.currentSegment - 1) * QUESTIONS_PER_SEGMENT + gameState.currentQuestionInSegment;
 
@@ -1143,27 +1144,119 @@ function updateTimerDisplay() {
   }
 }
 
+// ============================================
+// ANSWER ACTION & FEEDBACK CONTROLLER
+// ============================================
+
+let pendingNextAction = null;
+
+function showAnswerAction(type, pointsEarned) {
+  var container = document.getElementById("answer-action-container");
+  var badge = document.getElementById("answer-feedback-badge");
+  var icon = document.getElementById("feedback-badge-icon");
+  var title = document.getElementById("feedback-badge-title");
+  var sub = document.getElementById("feedback-badge-sub");
+  var btn = document.getElementById("btn-next-action");
+  var btnText = document.getElementById("btn-next-action-text");
+  var btnArrow = document.getElementById("btn-next-action-arrow");
+
+  if (!container) return;
+
+  if (type === "correct") {
+    if (badge) badge.className = "answer-feedback-badge feedback-badge-correct";
+    if (icon) icon.textContent = "✓";
+    if (title) title.textContent = "CORRECT";
+    if (sub) sub.textContent = "+" + pointsEarned + " POINTS";
+    if (btn) btn.className = "btn btn-action-next btn-glow";
+    if (btnText) btnText.textContent = "NEXT QUESTION";
+    if (btnArrow) btnArrow.style.display = "inline-block";
+
+    pendingNextAction = function () {
+      hideAnswerAction();
+      // Check if segment is complete
+      if (gameState.currentQuestionInSegment >= QUESTIONS_PER_SEGMENT) {
+        if (gameState.currentSegment >= TOTAL_SEGMENTS) {
+          endCompetition("completed");
+        } else {
+          showSegmentTransition();
+        }
+      } else {
+        loadQuestion();
+      }
+    };
+  } else if (type === "wrong") {
+    if (badge) badge.className = "answer-feedback-badge feedback-badge-wrong";
+    if (icon) icon.textContent = "✕";
+    if (title) title.textContent = "WRONG ANSWER";
+    if (sub) sub.textContent = "CASE CLOSED";
+    if (btn) btn.className = "btn btn-action-turnover btn-glow";
+    if (btnText) btnText.textContent = "TURN OVER";
+    if (btnArrow) btnArrow.style.display = "none";
+
+    pendingNextAction = function () {
+      hideAnswerAction();
+      endTurn("wrong");
+    };
+  } else if (type === "timeout") {
+    if (badge) badge.className = "answer-feedback-badge feedback-badge-wrong";
+    if (icon) icon.textContent = "⏱";
+    if (title) title.textContent = "TIME'S UP!";
+    if (sub) sub.textContent = "CASE CLOSED";
+    if (btn) btn.className = "btn btn-action-turnover btn-glow";
+    if (btnText) btnText.textContent = "TURN OVER";
+    if (btnArrow) btnArrow.style.display = "none";
+
+    pendingNextAction = function () {
+      hideAnswerAction();
+      endTurn("timeout");
+    };
+  }
+
+  container.style.display = "flex";
+  container.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function hideAnswerAction() {
+  var container = document.getElementById("answer-action-container");
+  if (container) container.style.display = "none";
+  pendingNextAction = null;
+}
+
+function handleNextAction() {
+  if (typeof pendingNextAction === "function") {
+    var action = pendingNextAction;
+    pendingNextAction = null;
+    action();
+  }
+}
+
 function handleTimeout() {
   if (gameState.isAnswered) return;
   gameState.isAnswered = true;
 
   disableAllOptions();
 
-  // Show timeout feedback
-  var overlay = document.getElementById("feedback-overlay");
-  var icon = document.getElementById("feedback-icon");
-  var feedbackText = document.getElementById("feedback-text");
-  overlay.className = "feedback-overlay show feedback-timeout";
-  icon.textContent = "⏱";
-  feedbackText.textContent = "TIME'S UP!";
+  var options = document.querySelectorAll(".option-btn");
+  options.forEach(function (btn) {
+    btn.classList.add("option-dimmed");
+  });
 
-  // Show correct answer
-  showCorrectAnswer();
+  // Highlight Right option in green
+  if (gameState.currentQuestion) {
+    var correctIdx = gameState.currentQuestion.answer;
+    if (options[correctIdx]) {
+      options[correctIdx].classList.remove("option-dimmed");
+      options[correctIdx].classList.add("option-correct");
+      var correctLetterSpan = options[correctIdx].querySelector(".option-letter");
+      if (correctLetterSpan) correctLetterSpan.textContent = "✓";
+    }
+  }
 
-  setTimeout(function () {
-    hideFeedbackOverlay();
-    endTurn("timeout");
-  }, TIMING.timeoutFeedback);
+  gameState.wrongAnswers++;
+  saveState();
+
+  // Show "TURN OVER" action
+  showAnswerAction("timeout");
 }
 
 // ============================================
@@ -1186,15 +1279,49 @@ function handleAnswer(selectedIndex) {
   disableAllOptions();
 
   var options = document.querySelectorAll(".option-btn");
+  options.forEach(function (btn, idx) {
+    if (idx !== selectedIndex) {
+      btn.classList.add("option-dimmed");
+    }
+  });
+
   if (isCorrect) {
     options[selectedIndex].classList.add("option-correct");
-    showFeedbackOverlay(true);
-    handleCorrectAnswer();
+    var letterSpan = options[selectedIndex].querySelector(".option-letter");
+    if (letterSpan) letterSpan.textContent = "✓";
+
+    // Scoring calculation: Fixed Points per difficulty
+    gameState.correctAnswers++;
+    var diff = getDifficultyForQuestion(gameState.overallQuestionNumber);
+    var earnedPoints = SCORE_MAP[diff] || 10;
+    gameState.score += earnedPoints;
+    saveState();
+
+    // Update score in UI
+    document.getElementById("quiz-score").textContent = "Score: " + gameState.score;
+
+    // Show feedback & action button "NEXT QUESTION →"
+    showAnswerAction("correct", earnedPoints);
   } else {
+    // Highlight wrong answer in red
     options[selectedIndex].classList.add("option-wrong");
-    showCorrectAnswer();
-    showFeedbackOverlay(false);
-    handleWrongAnswer();
+    var wrongLetterSpan = options[selectedIndex].querySelector(".option-letter");
+    if (wrongLetterSpan) wrongLetterSpan.textContent = "✕";
+
+    // Highlight right option in green
+    var correctIdx = question.answer;
+    if (options[correctIdx]) {
+      options[correctIdx].classList.remove("option-dimmed");
+      options[correctIdx].classList.add("option-correct");
+      var correctLetterSpan = options[correctIdx].querySelector(".option-letter");
+      if (correctLetterSpan) correctLetterSpan.textContent = "✓";
+    }
+
+    gameState.wrongAnswers++;
+    saveState();
+
+    // Show feedback & action button "TURN OVER"
+    showAnswerAction("wrong");
   }
 }
 
@@ -1206,6 +1333,7 @@ function disableAllOptions() {
 }
 
 function showCorrectAnswer() {
+  // Kept for backward compatibility if needed, but not called on wrong answers
   if (!gameState.currentQuestion) return;
   var correctIdx = gameState.currentQuestion.answer;
   var correctBtn = document.getElementById("option-" + correctIdx);
@@ -1215,69 +1343,34 @@ function showCorrectAnswer() {
 }
 
 function showFeedbackOverlay(isCorrect) {
+  // Legacy overlay retained for safety
   var overlay = document.getElementById("feedback-overlay");
+  if (!overlay) return;
   var icon = document.getElementById("feedback-icon");
   var text = document.getElementById("feedback-text");
 
   overlay.className = "feedback-overlay show " +
     (isCorrect ? "feedback-correct" : "feedback-wrong");
 
-  icon.textContent = isCorrect ? "✓" : "✕";
-  text.textContent = isCorrect ? "CORRECT!" : "WRONG ANSWER";
+  if (icon) icon.textContent = isCorrect ? "✓" : "✕";
+  if (text) text.textContent = isCorrect ? "CORRECT!" : "WRONG ANSWER";
 }
 
 function hideFeedbackOverlay() {
   var overlay = document.getElementById("feedback-overlay");
-  overlay.className = "feedback-overlay";
+  if (overlay) overlay.className = "feedback-overlay";
 }
 
 // ============================================
-// CORRECT ANSWER
+// CORRECT / WRONG DELEGATES (Internal)
 // ============================================
 
 function handleCorrectAnswer() {
-  gameState.correctAnswers++;
-
-  // Calculate score with time bonus
-  var diff = getDifficultyForQuestion(gameState.overallQuestionNumber);
-  var baseScore = SCORE_MAP[diff] || 10;
-  var timeBonus = Math.round(timerRemaining * 0.5);
-  gameState.score += baseScore + timeBonus;
-
-  saveState();
-
-  setTimeout(function () {
-    hideFeedbackOverlay();
-
-    // Check if segment is complete
-    if (gameState.currentQuestionInSegment >= QUESTIONS_PER_SEGMENT) {
-      // Segment complete
-      if (gameState.currentSegment >= TOTAL_SEGMENTS) {
-        // All segments done — WINNER!
-        endCompetition("completed");
-      } else {
-        // Show segment transition
-        showSegmentTransition();
-      }
-    } else {
-      // Next question in same segment
-      loadQuestion();
-    }
-  }, TIMING.correctFeedback);
+  // Logic is handled directly in handleAnswer / pendingNextAction
 }
 
-// ============================================
-// WRONG ANSWER
-// ============================================
-
 function handleWrongAnswer() {
-  gameState.wrongAnswers++;
-  saveState();
-
-  setTimeout(function () {
-    hideFeedbackOverlay();
-    endTurn("wrong");
-  }, TIMING.wrongFeedback);
+  // Logic is handled directly in handleAnswer / pendingNextAction
 }
 
 // ============================================
@@ -1627,6 +1720,7 @@ function applySwitchQuestion() {
   gameState.currentQuestion = newQuestion;
   gameState.questionStartTime = Date.now();
   gameState.isAnswered = false;
+  hideAnswerAction();
   saveState();
 
   // Re-render question
@@ -1891,11 +1985,18 @@ function shuffleArray(arr) {
 // ============================================
 
 document.addEventListener("keydown", function (e) {
-  // Enter key on name input
+  // Enter key handling
   if (e.key === "Enter") {
     var nameScreen = document.getElementById("screen-name");
-    if (nameScreen.classList.contains("active")) {
+    if (nameScreen && nameScreen.classList.contains("active")) {
       submitName();
+      return;
+    }
+
+    var actionContainer = document.getElementById("answer-action-container");
+    if (actionContainer && actionContainer.style.display === "flex") {
+      handleNextAction();
+      return;
     }
   }
 });

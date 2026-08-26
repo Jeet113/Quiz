@@ -1453,32 +1453,224 @@ input {
   transition: all 0.35s var(--ease);
 }
 
-/* Option States */
+/* Option States (Green Correct / Red Wrong / Dimmed) */
 .option-correct {
   border-color: var(--color-success) !important;
-  background: rgba(57, 217, 138, 0.12) !important;
-  box-shadow: 0 0 30px rgba(57, 217, 138, 0.3) !important;
+  background: rgba(57, 217, 138, 0.16) !important;
+  box-shadow: 0 0 32px rgba(57, 217, 138, 0.45), 0 0 2px var(--color-success) !important;
+  transform: scale(1.02);
+  transition: all 0.25s var(--ease) !important;
 }
 
 .option-correct .option-letter {
   background: var(--color-success) !important;
+  border-color: var(--color-success) !important;
   color: var(--text-dark) !important;
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 16px rgba(57, 217, 138, 0.6);
 }
 
 .option-wrong {
   border-color: var(--color-error) !important;
-  background: rgba(255, 77, 90, 0.12) !important;
-  box-shadow: 0 0 30px rgba(255, 77, 90, 0.3) !important;
+  background: rgba(255, 77, 90, 0.16) !important;
+  box-shadow: 0 0 32px rgba(255, 77, 90, 0.45), 0 0 2px var(--color-error) !important;
+  animation: optionWrongShake 0.35s var(--ease) both;
 }
 
 .option-wrong .option-letter {
   background: var(--color-error) !important;
+  border-color: var(--color-error) !important;
   color: #ffffff !important;
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 16px rgba(255, 77, 90, 0.6);
+}
+
+.option-dimmed {
+  opacity: 0.35 !important;
+  filter: grayscale(0.5);
+  transform: scale(0.98);
+  pointer-events: none;
+  transition: all 0.25s var(--ease);
+}
+
+@keyframes optionWrongShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+/* ---------- Answer Action & Next Button Container ---------- */
+.answer-action-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 22px;
+  animation: answerActionEnter 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes answerActionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.answer-feedback-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 28px;
+  border-radius: 100px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.feedback-badge-correct {
+  background: rgba(57, 217, 138, 0.12);
+  border: 1.5px solid var(--color-success);
+  box-shadow: 0 0 25px rgba(57, 217, 138, 0.25);
+}
+
+.feedback-badge-correct .feedback-badge-icon {
+  color: var(--color-success);
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.feedback-badge-correct .feedback-badge-title {
+  font-family: var(--font-heading);
+  color: var(--color-success);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.feedback-badge-correct .feedback-badge-sub {
+  font-family: var(--font-heading);
+  color: var(--accent-gold);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.feedback-badge-wrong {
+  background: rgba(255, 77, 90, 0.12);
+  border: 1.5px solid var(--color-error);
+  box-shadow: 0 0 25px rgba(255, 77, 90, 0.25);
+}
+
+.feedback-badge-wrong .feedback-badge-icon {
+  color: var(--color-error);
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.feedback-badge-wrong .feedback-badge-title {
+  font-family: var(--font-heading);
+  color: var(--color-error);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.feedback-badge-wrong .feedback-badge-sub {
+  font-family: var(--font-heading);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  opacity: 0.85;
+}
+
+.feedback-badge-text-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Action Button: NEXT QUESTION (Gold) */
+.btn-action-next {
+  background: rgba(7, 11, 20, 0.95);
+  color: var(--accent-gold);
+  border: 2px solid var(--accent-gold);
+  padding: 16px 48px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  box-shadow: 0 4px 25px rgba(245, 196, 81, 0.35);
+  min-height: 52px;
+}
+
+.btn-action-next:hover {
+  background: rgba(245, 196, 81, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 35px rgba(245, 196, 81, 0.45);
+}
+
+.btn-action-next:active {
+  transform: translateY(0);
+}
+
+/* Action Button: TURN OVER (Dark Red Danger) */
+.btn-action-turnover {
+  background: rgba(255, 77, 90, 0.12);
+  color: #FF4D5A;
+  border: 2px solid var(--color-error);
+  padding: 16px 48px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  box-shadow: 0 4px 25px rgba(255, 77, 90, 0.30);
+  min-height: 52px;
+}
+
+.btn-action-turnover:hover {
+  background: rgba(255, 77, 90, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 35px rgba(255, 77, 90, 0.45);
+  color: #ffffff;
+}
+
+.btn-action-turnover:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 680px) {
   .options-grid {
     grid-template-columns: 1fr;
+  }
+
+  .btn-action-next,
+  .btn-action-turnover {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 0.95rem;
   }
 }
 
