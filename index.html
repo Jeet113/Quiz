@@ -6,25 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHERLOCKED — CUET Career Club On-Spot Quiz Competition | Club Fest 2026</title>
   <meta name="description"
-    content="SHERLOCKED — The Ultimate On-Spot Quiz Competition at CUET Career Club Club Fest. 5 Steps. 15 Questions. Think Fast. Deduce Smart.">
+    content="SHERLOCKED — The Ultimate On-Spot Quiz Competition at CUET Career Club Club Fest 2026. 5 Investigation Steps. 15 Questions. Think Fast. Deduce Smart.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Anek+Bangla:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ========== Background Atmosphere (Blueprint & Ambient Glows) ========== -->
+  <!-- ========== Background Atmosphere (CSS Investigation Room) ========== -->
   <div class="bg-effects" aria-hidden="true">
-    <div class="bg-circle bg-circle-1"></div>
-    <div class="bg-circle bg-circle-2"></div>
-    <div class="bg-circle bg-circle-3"></div>
-    <div class="bg-circle bg-circle-4"></div>
-    <div class="bg-grid"></div>
-    <div class="bg-detective-lines"></div>
+    <div class="bg-grid-layer"></div>
+    <div class="bg-spotlight"></div>
+    <div class="bg-scanlines"></div>
+    <div class="bg-vignette"></div>
   </div>
 
   <!-- ========== App Container ========== -->
@@ -44,13 +42,12 @@
 
         <!-- Center: Primary Competition Title -->
         <div class="header-brand">
-          <span class="brand-badge">🕵️</span>
           <span class="brand-title">SHERLOCKED</span>
         </div>
 
         <!-- Right: Event Tag -->
         <div class="header-right">
-          <div class="header-tag">ON-SPOT QUIZ</div>
+          <div class="header-tag">ON-SPOT QUIZ • 2026</div>
         </div>
       </div>
     </header>
@@ -62,12 +59,22 @@
           <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="welcome-badge-logo">
           <span>CUET CAREER CLUB PRESENTS • CLUB FEST 2026</span>
         </div>
-        <h1 class="welcome-title">SHERLOCKED<br><span class="text-gradient">ON-SPOT QUIZ COMPETITION</span></h1>
-        <p class="welcome-subtitle">Think Fast. Deduce Smart. Solve All 5 Investigation Steps.</p>
+        <h1 class="welcome-title">SHERLOCKED</h1>
+        <p class="welcome-tagline">THE ULTIMATE QUIZ CASE</p>
+        <p class="welcome-subtitle">THINK FAST &bull; DEDUCE SMART</p>
+
+        <!-- Competition Info Pills -->
+        <div class="welcome-info-pills">
+          <span class="info-pill">15 QUESTIONS</span>
+          <span class="info-pill-divider">&bull;</span>
+          <span class="info-pill">300 MAX PTS</span>
+          <span class="info-pill-divider">&bull;</span>
+          <span class="info-pill">30 SEC / QUESTION</span>
+        </div>
 
         <!-- 5-Step Case Difficulty Roadmap -->
         <div class="steps-roadmap">
-          <div class="roadmap-header">⚡ 5-STEP CASE DIFFICULTY ARCHITECTURE</div>
+          <div class="roadmap-header">5 INVESTIGATION STEPS</div>
           <div class="roadmap-steps">
             <div class="roadmap-step step-easy">
               <div class="roadmap-badge">STEP 1</div>
@@ -112,12 +119,19 @@
           </div>
           <div class="rule-item">
             <span class="rule-icon">❌</span>
-            <span>Wrong Answer = <strong>Case Closed (Turn Over)</strong></span>
+            <span>Wrong Answer = <strong>Case Closed</strong></span>
           </div>
         </div>
+
+        <div class="welcome-extra-info">
+          <span>3 LIFELINES</span>
+          <span class="info-pill-divider">&bull;</span>
+          <span>WRONG ANSWER = CASE CLOSED</span>
+        </div>
+
         <div class="welcome-actions">
           <button class="btn btn-primary btn-glow btn-large" id="btn-begin" onclick="showScreen('screen-name')">
-            🔍 BEGIN INVESTIGATION
+            BEGIN INVESTIGATION <span class="btn-arrow">→</span>
           </button>
           <button class="btn btn-secondary" id="btn-view-ranking" onclick="showRankingScreen()"
             style="margin-top: 12px;">
@@ -135,7 +149,7 @@
             <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="card-club-logo">
           </div>
           <h2 class="card-title">Detective Identification</h2>
-          <p class="card-desc">Please enter your full name to begin the investigation.</p>
+          <p class="card-desc">Enter your full name to begin the investigation.</p>
           <input type="text" id="participant-name" class="input-field" placeholder="Enter Your Name" maxlength="40"
             autocomplete="off" spellcheck="false">
           <p id="name-error" class="input-error"></p>
@@ -298,6 +312,8 @@
     <section id="screen-out" class="screen">
       <div class="screen-content">
         <div class="card card-center out-card">
+          <!-- Decorative CASE CLOSED Stamp (CSS-only, no logic) -->
+          <div class="case-closed-stamp" aria-hidden="true">CASE CLOSED</div>
           <div class="out-icon">✕</div>
           <h2 class="out-title" id="out-title">CASE CLOSED</h2>
           <p class="out-message" id="out-message">Better luck next time, Detective!</p>
@@ -359,7 +375,7 @@
           <span class="winner-name" id="winner-name"></span>
         </div>
         <button class="btn btn-primary btn-large btn-glow" onclick="nextParticipant()">NEXT PARTICIPANT</button>
-        <button class="btn btn-ghost" style="color: var(--text-muted);" onclick="showRankingScreen()">📊 View Detective
+        <button class="btn btn-ghost" onclick="showRankingScreen()">📊 View Detective
           Ranking</button>
       </div>
     </section>
