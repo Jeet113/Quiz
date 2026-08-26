@@ -40,15 +40,48 @@
       <div class="screen-content welcome-content">
         <div class="welcome-badge">🏆 CLUB FEST 2026</div>
         <h1 class="welcome-title">THE ULTIMATE<br><span class="text-gradient">QUIZ CHALLENGE</span></h1>
-        <p class="welcome-subtitle">Think Fast. Answer Smart. Conquer All 5 Segments.</p>
+        <p class="welcome-subtitle">Think Fast. Answer Smart. Conquer All 5 Progressive Steps.</p>
+        
+        <!-- 5-Step Difficulty Roadmap -->
+        <div class="steps-roadmap">
+          <div class="roadmap-header">⚡ 5-STEP DIFFICULTY CHALLENGE</div>
+          <div class="roadmap-steps">
+            <div class="roadmap-step step-easy">
+              <div class="roadmap-badge">STEP 1</div>
+              <div class="roadmap-diff">Easy</div>
+              <div class="roadmap-pts">10 pts / Q</div>
+            </div>
+            <div class="roadmap-step step-easy-medium">
+              <div class="roadmap-badge">STEP 2</div>
+              <div class="roadmap-diff">Easy Medium</div>
+              <div class="roadmap-pts">15 pts / Q</div>
+            </div>
+            <div class="roadmap-step step-medium">
+              <div class="roadmap-badge">STEP 3</div>
+              <div class="roadmap-diff">Medium</div>
+              <div class="roadmap-pts">20 pts / Q</div>
+            </div>
+            <div class="roadmap-step step-medium-hard">
+              <div class="roadmap-badge">STEP 4</div>
+              <div class="roadmap-diff">Medium Hard</div>
+              <div class="roadmap-pts">25 pts / Q</div>
+            </div>
+            <div class="roadmap-step step-hard">
+              <div class="roadmap-badge">STEP 5</div>
+              <div class="roadmap-diff">Hard</div>
+              <div class="roadmap-pts">30 pts / Q</div>
+            </div>
+          </div>
+        </div>
+
         <div class="welcome-rules">
           <div class="rule-item">
             <span class="rule-icon">📋</span>
-            <span><strong>5 Segments</strong> × 3 Questions = 15 Total</span>
+            <span><strong>5 Steps</strong> × 3 Questions = 15 Total</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon">🎯</span>
-            <span>Choose a <strong>Topic</strong> for each Segment</span>
+            <span>Choose a <strong>Topic</strong> for each Step</span>
           </div>
           <div class="rule-item">
             <span class="rule-icon">⏱️</span>
@@ -111,14 +144,14 @@
       <div class="screen-content">
         <div class="card card-center confirm-card">
           <div class="card-icon">⚡</div>
-          <h2 class="card-title">Segment Ready</h2>
+          <h2 class="card-title">Step Ready</h2>
           <div class="confirm-details">
             <div class="confirm-item">
               <span class="confirm-label">Participant</span>
               <span class="confirm-value" id="confirm-name"></span>
             </div>
             <div class="confirm-item">
-              <span class="confirm-label">Segment</span>
+              <span class="confirm-label">Step</span>
               <span class="confirm-value" id="confirm-segment"></span>
             </div>
             <div class="confirm-item">
@@ -135,7 +168,7 @@
             </div>
           </div>
           <button class="btn btn-primary btn-glow btn-large" onclick="startSegment()">
-            START SEGMENT
+            START STEP
           </button>
           <button class="btn btn-ghost" onclick="showScreen('screen-topic')">← Change Topic</button>
         </div>
