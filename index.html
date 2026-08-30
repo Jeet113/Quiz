@@ -236,9 +236,9 @@
               <span class="timer-text" id="timer-text">30</span>
             </div>
             <button class="btn-timer-toggle" id="btn-timer-toggle" onclick="toggleTimerPause()"
-              title="Pause or Resume the quiz timer">
+              title="LifeLine — Pause or Resume the quiz timer">
               <span class="toggle-icon" id="timer-toggle-icon">⏸</span>
-              <span class="toggle-text" id="timer-toggle-text">Pause</span>
+              <span class="toggle-text" id="timer-toggle-text">LifeLine</span>
             </button>
           </div>
         </div>
@@ -443,12 +443,12 @@
           </div>
         </div>
 
-        <!-- Phone Call Pause / Resume Button -->
+        <!-- Phone Call Start / Pause / Resume Button -->
         <div class="phone-timer-controls">
-          <button class="btn-timer-toggle phone-pause-btn" id="btn-phone-timer-toggle" onclick="togglePhoneCallPause()"
-            title="Pause or resume the call timer">
-            <span class="toggle-icon" id="phone-pause-icon">⏸</span>
-            <span class="toggle-text" id="phone-pause-text">Pause Call Timer</span>
+          <button class="btn-timer-toggle phone-pause-btn is-ready" id="btn-phone-timer-toggle"
+            onclick="handlePhoneCallTimerAction()" title="Start or control the call timer">
+            <span class="toggle-icon" id="phone-pause-icon">▶</span>
+            <span class="toggle-text" id="phone-pause-text">Start Timer</span>
           </button>
         </div>
 

@@ -2633,7 +2633,7 @@ function toggleTimerPause() {
     showLifelineBanner("▶️ <strong>Timer Resumed</strong>", "toast-extra", 1200);
   } else {
     pauseTimer();
-    showLifelineBanner("⏸️ <strong>Timer Paused</strong>", "toast-5050", 1200);
+    showLifelineBanner("⏸️ <strong>LifeLine Active — Timer Paused</strong>", "toast-5050", 1200);
   }
 }
 
@@ -2651,7 +2651,7 @@ function updateTimerToggleButton(isPaused) {
   } else {
     btn.classList.remove("is-paused");
     if (icon) icon.textContent = "⏸";
-    if (text) text.textContent = "Pause";
+    if (text) text.textContent = "LifeLine";
   }
 }
 
@@ -3180,9 +3180,10 @@ function apply5050() {
 // 2. LIFELINE: PHONE A FRIEND (30s Live Call Visualizer)
 let phoneCallInterval = null;
 let phoneCallSeconds = 30;
+let isPhoneCallStarted = false;
 let isPhoneCallPaused = false;
 
-function updatePhonePauseButton(isPaused) {
+function updatePhoneTimerUI() {
   var btn = document.getElementById("btn-phone-timer-toggle");
   var icon = document.getElementById("phone-pause-icon");
   var text = document.getElementById("phone-pause-text");
@@ -3190,39 +3191,39 @@ function updatePhonePauseButton(isPaused) {
   var waves = document.getElementById("audio-waves");
   var statusText = document.getElementById("phone-call-status");
 
-  if (btn) {
-    if (isPaused) {
-      btn.classList.add("is-paused");
-      if (icon) icon.textContent = "▶️";
-      if (text) text.textContent = "Resume Call Timer";
-    } else {
-      btn.classList.remove("is-paused");
-      if (icon) icon.textContent = "⏸";
-      if (text) text.textContent = "Pause Call Timer";
+  if (!isPhoneCallStarted) {
+    if (btn) {
+      btn.className = "btn-timer-toggle phone-pause-btn is-ready";
+      if (icon) icon.textContent = "▶";
+      if (text) text.textContent = "Start Timer";
     }
-  }
-
-  if (circle) {
-    if (isPaused) {
-      circle.classList.add("is-paused");
-    } else {
-      circle.classList.remove("is-paused");
+    if (circle) circle.classList.remove("is-paused");
+    if (waves) waves.classList.add("is-paused");
+    if (statusText) {
+      statusText.textContent = "📞 Call Ready • Press 'Start Timer' when answered";
+      statusText.style.color = "var(--accent-gold)";
     }
-  }
-
-  if (waves) {
-    if (isPaused) {
-      waves.classList.add("is-paused");
-    } else {
-      waves.classList.remove("is-paused");
+  } else if (isPhoneCallPaused) {
+    if (btn) {
+      btn.className = "btn-timer-toggle phone-pause-btn is-paused";
+      if (icon) icon.textContent = "▶";
+      if (text) text.textContent = "Resume Timer";
     }
-  }
-
-  if (statusText) {
-    if (isPaused) {
+    if (circle) circle.classList.add("is-paused");
+    if (waves) waves.classList.add("is-paused");
+    if (statusText) {
       statusText.textContent = "⏸️ Call Timer Paused • Friend on line";
       statusText.style.color = "var(--accent-cyan)";
-    } else {
+    }
+  } else {
+    if (btn) {
+      btn.className = "btn-timer-toggle phone-pause-btn";
+      if (icon) icon.textContent = "⏸";
+      if (text) text.textContent = "Pause Timer";
+    }
+    if (circle) circle.classList.remove("is-paused");
+    if (waves) waves.classList.remove("is-paused");
+    if (statusText) {
       if (phoneCallSeconds <= 5) {
         statusText.textContent = "⚠️ Call Time Ending Soon • " + phoneCallSeconds + "s";
         statusText.style.color = "var(--color-error)";
@@ -3234,36 +3235,31 @@ function updatePhonePauseButton(isPaused) {
   }
 }
 
-function togglePhoneCallPause() {
-  isPhoneCallPaused = !isPhoneCallPaused;
-  updatePhonePauseButton(isPhoneCallPaused);
-  if (isPhoneCallPaused) {
-    showLifelineBanner("⏸️ <strong>Phone Timer Paused</strong>", "toast-5050", 1200);
-  } else {
+function handlePhoneCallTimerAction() {
+  if (!isPhoneCallStarted) {
+    // Start countdown
+    isPhoneCallStarted = true;
+    isPhoneCallPaused = false;
+    startPhoneCallCountdown();
+    updatePhoneTimerUI();
+    showLifelineBanner("▶️ <strong>Phone Timer Started! (30s)</strong>", "toast-extra", 1200);
+  } else if (isPhoneCallPaused) {
+    // Resume
+    isPhoneCallPaused = false;
+    updatePhoneTimerUI();
     showLifelineBanner("▶️ <strong>Phone Timer Resumed</strong>", "toast-extra", 1200);
+  } else {
+    // Pause
+    isPhoneCallPaused = true;
+    updatePhoneTimerUI();
+    showLifelineBanner("⏸️ <strong>Phone Timer Paused</strong>", "toast-5050", 1200);
   }
 }
 
-function applyPhoneAFriend() {
-  // Turn off / pause main quiz timer immediately
-  pauseTimer();
-
-  var modal = document.getElementById("modal-phone");
+function startPhoneCallCountdown() {
   var secondsSpan = document.getElementById("phone-call-seconds");
   var statusText = document.getElementById("phone-call-status");
 
-  if (modal) modal.classList.add("show");
-  phoneCallSeconds = 30;
-  isPhoneCallPaused = false;
-  updatePhonePauseButton(false);
-
-  if (secondsSpan) secondsSpan.textContent = phoneCallSeconds;
-  if (statusText) {
-    statusText.textContent = "🟢 Call in Progress • Speak with your friend";
-    statusText.style.color = "var(--color-success)";
-  }
-
-  // Turn on Phone a Friend 30s countdown timer
   if (phoneCallInterval) clearInterval(phoneCallInterval);
   phoneCallInterval = setInterval(function () {
     if (isPhoneCallPaused) return;
@@ -3271,7 +3267,7 @@ function applyPhoneAFriend() {
     phoneCallSeconds--;
     if (secondsSpan) secondsSpan.textContent = Math.max(0, phoneCallSeconds);
 
-    if (phoneCallSeconds <= 5 && statusText) {
+    if (phoneCallSeconds <= 5 && statusText && !isPhoneCallPaused) {
       statusText.textContent = "⚠️ Call Time Ending Soon • " + phoneCallSeconds + "s";
       statusText.style.color = "var(--color-error)";
     }
@@ -3284,13 +3280,34 @@ function applyPhoneAFriend() {
   }, 1000);
 }
 
+function applyPhoneAFriend() {
+  // Turn off / pause main quiz timer immediately
+  pauseTimer();
+
+  var modal = document.getElementById("modal-phone");
+  var secondsSpan = document.getElementById("phone-call-seconds");
+
+  if (modal) modal.classList.add("show");
+  phoneCallSeconds = 30;
+  isPhoneCallStarted = false;
+  isPhoneCallPaused = false;
+
+  if (phoneCallInterval) {
+    clearInterval(phoneCallInterval);
+    phoneCallInterval = null;
+  }
+
+  if (secondsSpan) secondsSpan.textContent = phoneCallSeconds;
+  updatePhoneTimerUI();
+}
+
 function closePhoneModal() {
   if (phoneCallInterval) {
     clearInterval(phoneCallInterval);
     phoneCallInterval = null;
   }
+  isPhoneCallStarted = false;
   isPhoneCallPaused = false;
-  updatePhonePauseButton(false);
 
   var modal = document.getElementById("modal-phone");
   if (modal) modal.classList.remove("show");
