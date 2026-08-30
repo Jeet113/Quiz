@@ -141,7 +141,7 @@
       </div>
     </section>
 
-    <!-- ===== Screen: Participant Name ===== -->
+    <!-- ===== Screen: Participant Student ID ===== -->
     <section id="screen-name" class="screen">
       <div class="screen-content">
         <div class="card card-center">
@@ -149,9 +149,9 @@
             <img src="Assests/Logo_Club.png" alt="CUET Career Club Logo" class="card-club-logo">
           </div>
           <h2 class="card-title">Detective Identification</h2>
-          <p class="card-desc">Enter your full name to begin the investigation.</p>
-          <input type="text" id="participant-name" class="input-field" placeholder="Enter Your Name" maxlength="40"
-            autocomplete="off" spellcheck="false">
+          <p class="card-desc">Enter your Student ID to begin the investigation.</p>
+          <input type="text" id="participant-name" class="input-field" placeholder="Enter Your Student ID"
+            maxlength="40" autocomplete="off" spellcheck="false">
           <p id="name-error" class="input-error"></p>
           <button class="btn btn-primary btn-glow" id="btn-submit-name" onclick="submitName()">PROCEED TO CASE
             ROOM</button>
@@ -437,10 +437,19 @@
 
         <!-- Big Call Timer -->
         <div class="phone-timer-container">
-          <div class="phone-timer-circle">
+          <div class="phone-timer-circle" id="phone-timer-circle">
             <span class="phone-timer-val" id="phone-call-seconds">30</span>
             <span class="phone-timer-unit">SECONDS</span>
           </div>
+        </div>
+
+        <!-- Phone Call Pause / Resume Button -->
+        <div class="phone-timer-controls">
+          <button class="btn-timer-toggle phone-pause-btn" id="btn-phone-timer-toggle" onclick="togglePhoneCallPause()"
+            title="Pause or resume the call timer">
+            <span class="toggle-icon" id="phone-pause-icon">⏸</span>
+            <span class="toggle-text" id="phone-pause-text">Pause Call Timer</span>
+          </button>
         </div>
 
         <!-- Audio Waves Animation -->
